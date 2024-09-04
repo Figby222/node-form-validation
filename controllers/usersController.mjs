@@ -16,7 +16,7 @@ function usersCreateGet(req, res) {
 function usersCreatePost(req, res) {
     const { firstName, lastName } = req.body;
     usersStorage.addUser({ firstName, lastName });
-    res.redirect("/");
+    res.redirect("/users");
 }
 
 export { usersListGet, usersCreateGet, usersCreatePost }
