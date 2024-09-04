@@ -11,6 +11,7 @@
                 <% users.forEach(user => { %>
                     <li class="user-info">
                         ID: <%= user.id %>, Name: <%= user.firstName %> <%= user.lastName %>
+                        <a href="/users/<%= user.id %>/update">Update</a>
                     </li>
                <% }) %>
             <% } %>
