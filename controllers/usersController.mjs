@@ -84,5 +84,27 @@ function usersDeletePost(req, res) {
     res.redirect("/users");
 }
 
+function usersSearchGet(req, res) {
+    const users = usersStorage.getUsers();
+    const targetName = req.query.name;
+    const targetEmail = req.query.email;
+    
+    if (targetEmail) {
+        const user = users.find((currentUser) => currentUser.email === targetEmail && (currentUser.firstName + currentUser.lastName) === targetName);
+        if (!user) {
+            return res.status(404).send("Could not find user")
+        }
+        return res.send(user);
+    }
 
-export { usersListGet, usersCreateGet, usersCreatePost, usersUpdateGet, usersUpdatePost, usersDeletePost }
+    const user = users.find((currentUser) => (currentUser.firstName + currentUser.lastName) === targetName);
+
+    if (!user) {
+        return res.status(404).send("Could not find user")
+    }
+
+    return res.send(user);
+}
+
+
+export { usersListGet, usersCreateGet, usersCreatePost, usersUpdateGet, usersUpdatePost, usersDeletePost, usersSearchGet }
