@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/Figby222/node-form-validation#readme",
   "dependencies": {
+    "dotenv": "^16.4.5",
     "express": "^4.19.2"
   }
 }
