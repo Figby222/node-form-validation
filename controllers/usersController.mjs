@@ -1,5 +1,16 @@
+import usersStorage from "../storages/usersStorage.mjs";
+
 function usersListGet(req, res) {
-    res.send("Cookies");
+    res.render("users", {
+        title: "User List",
+        users: usersStorage.getUsers(),
+    })
 }
 
-export { usersListGet }
+function usersCreateGet(req, res) {
+    res.render("createUser", {
+        title: "Create user",
+    })
+}
+
+export { usersListGet, usersCreateGet }
