@@ -1,5 +1,5 @@
 function getRootPage(req, res) {
-    res.send("Hi");
+    res.render("index");
 }
 
 export { getRootPage }
