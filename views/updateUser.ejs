@@ -10,6 +10,9 @@
         <form action="/users/<%= user.id %>/update" method="POST">
             <input type="text" name="firstName" value="<%= user.firstName %>" required />
             <input type="text" name="lastName" value="<%= user.lastName %>" required />
+            <input type="email" name="email" value="<%= user.email %>" required />
+            <input type="age" name="age" value="<%= user.age %>" min="18" max="120" />
+            <input type="bio" name="bio" value="<%= user.bio %>" maxlength="200" />
             <button type="submit">Update User</button>
         </form>
         <a href="/users">Back to users</a>
