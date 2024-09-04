@@ -111,10 +111,11 @@ const usersSearchGet = [
 
         if (targetEmail) {
             const user = users.find((currentUser) => currentUser.email === targetEmail && (currentUser.firstName + currentUser.lastName) === targetName);
+            console.log(user);
             if (!user) {
                 return res.status(404).render("search", { title: "404 - User not found", user: null })
             }
-            return res.render("search", { title: "User", users: [user] });
+            return res.render("search", { title: "User", user: user });
         }
     
         const user = users.find((currentUser) => (currentUser.firstName + currentUser.lastName) === targetName);
@@ -123,7 +124,7 @@ const usersSearchGet = [
             return res.status(404).render("search", { title: "404 - User not found", user: null })
         }
     
-        return res.render("search", { title: "User", users: [user] });
+        return res.render("search", { title: "User", user: user });
     }
 ]
 
