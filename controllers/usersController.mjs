@@ -112,18 +112,18 @@ const usersSearchGet = [
         if (targetEmail) {
             const user = users.find((currentUser) => currentUser.email === targetEmail && (currentUser.firstName + currentUser.lastName) === targetName);
             if (!user) {
-                return res.status(404).send("Could not find user")
+                return res.status(404).render("search", { title: "404 - User not found", user: null })
             }
-            return res.send(user);
+            return res.render("search", { title: "User", users: [user] });
         }
     
         const user = users.find((currentUser) => (currentUser.firstName + currentUser.lastName) === targetName);
     
         if (!user) {
-            return res.status(404).send("Could not find user")
+            return res.status(404).render("search", { title: "404 - User not found", user: null })
         }
     
-        return res.send(user);
+        return res.render("search", { title: "User", users: [user] });
     }
 ]
 
