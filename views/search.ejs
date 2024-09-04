@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title><%= title %></title>
+    </head>
+    <body>
+        <h1>User</h1>
+        <% if (locals.user) { %>
+            <p class="user-details">
+                ID: <%= user.id %> Name: <%= users.firstName %> <%= users.lastName %> Email: <%= users.email %>
+                <% if (user.age) { %>
+                    Age: <%= user.age %>
+                <% } %>
+                <% if (user.bio) { %>
+                    Bio <%= user.bio %>
+                <% } %>
+            </p>
+        <% } %>
+        <% else { %>
+            <p class="user-not-found">Could not find user</p>
+        <% } %>
+    </body>
+</html>
