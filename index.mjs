@@ -2,6 +2,7 @@ import express from "express";
 import indexRouter from "./routers/indexRouter.mjs";
 import path from "node:path";
 import "dotenv/config";
+import usersRouter from "./routers/usersRouter.mjs";
 
 const app = express();
 
@@ -13,6 +14,7 @@ app.set("view engine", "ejs");
 
 app.use(express.urlencoded({ extended: true }));
 
+app.use("/users", usersRouter);
 app.use("/", indexRouter);
 
 app.listen(process.env.PORT, () => {
