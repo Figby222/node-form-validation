@@ -1,5 +1,5 @@
 import usersStorage from "../storages/usersStorage.mjs";
-import { body, validationResult } from "express-validator";
+import { query, body, validationResult } from "express-validator";
 
 const alphaErr = "must only contain letters.";
 const lengthErr = "must be between 1 and 10 characters";
@@ -23,6 +23,16 @@ const validateUser = [
         .optional()
         .isLength({ max: 200 }).withMessage(`Bio ${bioLengthErr}`),
 ];
+
+const userSearchEmptyErr = "Name must not be empty"
+
+const validateUserSearch = [
+    query("name").trim()
+        .notEmpty().withMessage(userSearchEmptyErr),
+    query("email").trim()
+        .optional({ values: "falsy" })
+        .isEmail().withMessage(`Email ${emailFormatErr}`)
+]
 
 function usersListGet(req, res) {
     res.render("users", {
@@ -84,27 +94,38 @@ function usersDeletePost(req, res) {
     res.redirect("/users");
 }
 
-function usersSearchGet(req, res) {
-    const users = usersStorage.getUsers();
-    const targetName = req.query.name;
-    const targetEmail = req.query.email;
+const usersSearchGet = [
+    validateUserSearch,
+    (req, res) => {
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("createUser", {
+                title: "Create User",
+                errors: errors.array()
+            })
+        }
     
-    if (targetEmail) {
-        const user = users.find((currentUser) => currentUser.email === targetEmail && (currentUser.firstName + currentUser.lastName) === targetName);
+        const users = usersStorage.getUsers();
+        const targetName = req.query.name.replace(/\s/g, "");
+        const targetEmail = req.query.email.replace(/\s/g, "");
+
+        if (targetEmail) {
+            const user = users.find((currentUser) => currentUser.email === targetEmail && (currentUser.firstName + currentUser.lastName) === targetName);
+            if (!user) {
+                return res.status(404).send("Could not find user")
+            }
+            return res.send(user);
+        }
+    
+        const user = users.find((currentUser) => (currentUser.firstName + currentUser.lastName) === targetName);
+    
         if (!user) {
             return res.status(404).send("Could not find user")
         }
+    
         return res.send(user);
     }
-
-    const user = users.find((currentUser) => (currentUser.firstName + currentUser.lastName) === targetName);
-
-    if (!user) {
-        return res.status(404).send("Could not find user")
-    }
-
-    return res.send(user);
-}
+]
 
 
 export { usersListGet, usersCreateGet, usersCreatePost, usersUpdateGet, usersUpdatePost, usersDeletePost, usersSearchGet }
