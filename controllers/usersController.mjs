@@ -42,5 +42,31 @@ const usersCreatePost = [
     }
 ]
 
+const usersUpdateGet = (req, res) => {
+    const user = usersStorage.getUser(req.params.id);
+    res.render("updateUser", {
+        title: "Update User",
+        user: user,
+    })
+}
 
-export { usersListGet, usersCreateGet, usersCreatePost }
+const usersUpdatePost = [
+    validateUser,
+    (req, res) => {
+        const user = usersStorage.getUser(req.params.id);
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).render("updateUser", {
+                title: "Update User",
+                user: user,
+                errors: errors.array(),
+            });
+        }
+        const { firstName, lastName } = req.body;
+        usersStorage.updateUser(req.params.id, { firstName, lastName });
+        res.redirect("/users");
+    }
+]
+
+
+export { usersListGet, usersCreateGet, usersCreatePost, usersUpdateGet, usersUpdatePost }
