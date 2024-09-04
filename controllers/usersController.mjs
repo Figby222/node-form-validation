@@ -17,7 +17,7 @@ const validateUser = [
     body("email").trim()
         .isEmail().withMessage(`Email ${emailFormatErr}`),
     body("age").trim()
-        .optional()
+        .optional({ values: "falsy" })
         .isInt({ min: 18, max: 120 }).withMessage(`Age ${ageRangeErr}`),
     body("bio").trim()
         .optional()
