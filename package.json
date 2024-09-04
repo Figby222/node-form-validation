@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/Figby222/node-form-validation/issues"
   },
-  "homepage": "https://github.com/Figby222/node-form-validation#readme"
+  "homepage": "https://github.com/Figby222/node-form-validation#readme",
+  "dependencies": {
+    "express": "^4.19.2"
+  }
 }
