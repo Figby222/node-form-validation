@@ -13,4 +13,10 @@ function usersCreateGet(req, res) {
     })
 }
 
-export { usersListGet, usersCreateGet }
+function usersCreatePost(req, res) {
+    const { firstName, lastName } = req.body;
+    usersStorage.addUser({ firstName, lastName });
+    res.redirect("/");
+}
+
+export { usersListGet, usersCreateGet, usersCreatePost }
